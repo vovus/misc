@@ -1,3 +1,6 @@
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
+
 #include <set>
 #include <map>
 #include <vector>
@@ -139,10 +142,31 @@ static void intersect()
 	}
 }
 
-int main()
+int __main()
 {
 	plot_fill();
 	intersect();
 
 	return 0;
+}
+
+
+TEST_CASE("Smoke", "Test") 
+{
+	__main();
+
+	REQUIRE(result.size() == result0.size());
+
+	std::for_each(result.begin(), result.end(), [&](auto& i)
+	{
+		auto key = i.first;
+		rect_t rect = i.second;
+
+		REQUIRE(result0.find(key) != result0.end());
+
+		REQUIRE(result0[key].x == result[key].x);
+		REQUIRE(result0[key].y == result[key].y);
+		REQUIRE(result0[key].w == result[key].w);
+		REQUIRE(result0[key].h == result[key].h);
+	});
 }
