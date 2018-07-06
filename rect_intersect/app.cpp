@@ -1,6 +1,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <iostream>
 
 #include "main.h"
 #include "io_helper.h"
@@ -12,6 +13,14 @@ static std::string fout("result.txt");
 
 int main(int argc, char* argv[])
 {
+    if(argc != 2) 
+    {
+      std::cout << "Usage: ./main.exe inputfile.json\n";
+      return 1;
+    }
+      
+    std::string fin(argv[1]);
+    
     std::vector<rect_t> rects;
 	std::map<std::set<size_t>, rect_t> result;
 
