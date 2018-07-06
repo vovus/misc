@@ -26,18 +26,18 @@ static std::map<std::set<size_t>, rect_t> result0 =
 };
 
 static std::string result0_txt = R"(Input:
-1: Rectangle at(100, 100), w = 250, h = 80.
-2 : Rectangle at(120, 200), w = 250, h = 150.
-3 : Rectangle at(140, 160), w = 250, h = 100.
-4 : Rectangle at(160, 140), w = 350, h = 190.
-Intersections
-Between rectangle 1 and 3 at(140, 160), w = 210, h = 20.
-Between rectangle 1 and 4 at(160, 140), w = 190, h = 40.
-Between rectangle 2 and 3 at(140, 200), w = 230, h = 60.
-Between rectangle 2 and 4 at(160, 200), w = 210, h = 130.
-Between rectangle 3 and 4 at(160, 160), w = 230, h = 100.
-Between rectangle 1, 3 and 4 at(160, 160), w = 190, h = 20.
-Between rectangle 2, 3 and 4 at(160, 200), w = 210, h = 60.
+1: Rectangle at (100, 100), w=250, h=80.
+2: Rectangle at (120, 200), w=250, h=150.
+3: Rectangle at (140, 160), w=250, h=100.
+4: Rectangle at (160, 140), w=350, h=190.
+Intersections:
+Between rectangle 1 and 3 at (140, 160), w=210, h=20.
+Between rectangle 1 and 4 at (160, 140), w=190, h=40.
+Between rectangle 2 and 3 at (140, 200), w=230, h=60.
+Between rectangle 2 and 4 at (160, 200), w=210, h=130.
+Between rectangle 3 and 4 at (160, 160), w=230, h=100.
+Between rectangle 1 and 3 and 4 at (160, 160), w=190, h=20.
+Between rectangle 2 and 3 and 4 at (160, 200), w=210, h=60.
 )";
 
 TEST_CASE("Smoke", "Test1")
@@ -101,19 +101,33 @@ TEST_CASE("Json / InOut", "Test2")
 
 	// re-read back into string
 	std::ifstream f(fout);
-	std::string file_data;
 
+	// check if exists
 	REQUIRE(f.is_open() == true);
 
 	std::stringstream fs;
 	fs << f.rdbuf();
-	file_data = fs.str();
-	f.close();
-	
-	// calculate / compare hash
-	std::hash<std::string> hash_fn;
-	size_t hash = hash_fn(file_data);
-	size_t hash0 = hash_fn(result0_txt);
 
+	std::string file_data = fs.str();
+	
+	// calculate / compare hash 
+	// to mitigate new lines (windows vs unix) and lines order, which is not important
+	// do hash on each string, then add them all)
+	std::hash<std::string> hash_fn;
+
+	size_t hash = 0, hash0 = 0;
+	std::istringstream ss(file_data);
+	std::istringstream ss0(result0_txt);
+
+	std::string s, s0;
+    while (std::getline(ss, s) && std::getline(ss0, s0))
+	{
+    	hash += hash_fn(s);
+		hash0 += hash_fn(s0);
+	}
+	f.close();
+
+	REQUIRE(hash != 0);
+	REQUIRE(hash0 != 0);
 	REQUIRE(hash == hash0);
 }

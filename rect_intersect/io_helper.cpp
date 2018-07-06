@@ -48,11 +48,10 @@ void TIOHelper::json_read(std::vector<rect_t>& rects)
 
 		// Read values
 		pt::ptree rects_node;
-		root.get_child("rects", rects_node);
 
-		for (auto pi = rects_node.begin(); pi != rects_node.end(); ++pi)
+		for (auto& pi : root.get_child("rects"))
 		{
-			pt::ptree rect_node = pi->second;
+			pt::ptree rect_node = pi.second;
 			pt::ptree x_val = rect_node.get_child(std::string("x"));
 			pt::ptree y_val = rect_node.get_child(std::string("y"));
 			pt::ptree w_val = rect_node.get_child(std::string("w"));
@@ -90,7 +89,7 @@ void TIOHelper::file_write(
 		for_each(rects.begin(), rects.end(), [&](auto& r)
 		{
 			rect_t rect = r;
-			f << num++ << ": Rectangle at (" << rect.x << ", " << rect.y << "), w=" << rect.w << ", h=" << rect.h << std::endl;
+			f << num++ << ": Rectangle at (" << rect.x << ", " << rect.y << "), w=" << rect.w << ", h=" << rect.h << "." << std::endl;
 		});
 
 		//
@@ -103,7 +102,7 @@ void TIOHelper::file_write(
 			std::set<size_t> ids = i.first;
 			rect_t rect = i.second;
 
-			f << "Between rectangle at " << *(ids.begin());
+			f << "Between rectangle " << *(ids.begin());
 			for_each(++ids.begin(), ids.end(), [&](auto& j) 
 			{ 
 				size_t id = j;
