@@ -10,6 +10,8 @@
 #include <set>
 #include <algorithm>
 
+//#include <string.h>
+
 #include "io_helper.h"
 #include "main.h"
 
@@ -116,6 +118,6 @@ void TIOHelper::file_write(
 	else
 	{
 		char buf[1024] = { 0 };
-		strerror_s(buf, sizeof(buf) - 1, errno);
+		//strerror_l(buf, sizeof(buf) - 1, errno);
 	}
 }
