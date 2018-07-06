@@ -1,44 +1,38 @@
-#define CATCH_CONFIG_MAIN
-#include "catch.hpp"
-
 #include <set>
 #include <map>
 #include <vector>
 #include <algorithm>
 #include <iterator>
 
+#include "main.h"
+
 // rect
 
-struct rect_t
+using namespace __intersect;
+
+namespace __intersect
 {
-	size_t x, y, w, h;
-};
+	class TIntersector
+	{
+		std::map<size_t, std::set<size_t>> pointsX, pointsY;	// key = either X or Y start or end of the rect, set is rect's ids containing this point
 
-static std::vector<rect_t> rects =
-{
-	{ 100, 100, 250, 80 },
-	{ 120, 200, 250, 150 },
-	{ 140, 160, 250, 100 },
-	{ 160, 140, 350, 190 }
-};
+	public:
+		void plot_fill(std::vector<rect_t>& rects);
+		void intersect(std::map<std::set<size_t>, rect_t>& result);
+	};
 
-static std::map<std::set<size_t>, rect_t> result;
+	int __main(std::vector<rect_t>& rects, std::map<std::set<size_t>, rect_t>& result)
+	{
+		TIntersector worker;
 
-static std::map<std::set<size_t>, rect_t> result0 =
-{
-	{ { 1, 3 },{ 140, 160, 210, 20 } },
-	{ { 1, 4 },{ 160, 140, 190, 40 } },
-	{ { 2, 3 },{ 140, 200, 230, 60 } },
-	{ { 2, 4 },{ 160, 200, 210, 130 } },
-	{ { 3, 4 },{ 160, 160, 230, 100 } },
-	{ { 1, 3, 4 },{ 160, 160, 190, 20 } },
-	{ { 2, 3, 4 },{ 160, 200, 210, 60 } }
-};
+		worker.plot_fill(rects);
+		worker.intersect(result);
 
+		return 0;
+	}
+}
 
-static std::map<size_t, std::set<size_t>> pointsX, pointsY;	// key = either X or Y start or end of the rect, set is rect's ids containing this point
-
-static void plot_fill()
+void TIntersector::plot_fill(std::vector<rect_t>& rects)
 {
 	// 1st - plot all points
 	for (size_t i = 0; i < rects.size(); ++i)
@@ -69,7 +63,7 @@ static void plot_fill()
 	}
 }
 
-static void intersect()
+void TIntersector::intersect(std::map<std::set<size_t>, rect_t>& result)
 {
 	for (auto ix = pointsX.begin(); ix != pointsX.end(); ++ix)
 	{
@@ -140,33 +134,4 @@ static void intersect()
 			}
 		}
 	}
-}
-
-int __main()
-{
-	plot_fill();
-	intersect();
-
-	return 0;
-}
-
-
-TEST_CASE("Smoke", "Test") 
-{
-	__main();
-
-	REQUIRE(result.size() == result0.size());
-
-	std::for_each(result.begin(), result.end(), [&](auto& i)
-	{
-		auto key = i.first;
-		rect_t rect = i.second;
-
-		REQUIRE(result0.find(key) != result0.end());
-
-		REQUIRE(result0[key].x == result[key].x);
-		REQUIRE(result0[key].y == result[key].y);
-		REQUIRE(result0[key].w == result[key].w);
-		REQUIRE(result0[key].h == result[key].h);
-	});
 }
