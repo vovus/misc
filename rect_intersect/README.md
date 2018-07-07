@@ -1,13 +1,9 @@
 === WTH ===<br/>
-<br/>
 Given set of rectangulars in json format description find out all intersections and write results into text file<br/>
-<br/>
 assumptions:<br/>
 - don't go above 1000 rectangulars<br/>
 - overlapping rectangulars are distinct<br/>
-<br/>
 === Build ===<br/>
-<br/>
 C++ 14 compiler is required (either Visual Studio 2015 / 2017, or cmake-3.1)<br/>
 Build with CMake or on Linux:<br/>
 - mkdir build<br/>
