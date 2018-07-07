@@ -77,11 +77,11 @@ On Windows:
 - open Visual Studio and build
 from command line:
 - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\vsvars32.bat"
-- devenv rect_intersect.sln /build "Release|Win32"
+- devenv main.sln /build "Release|Win32"
 
 To run the test:
 - build test project
-copy *.json from ../test to Debug (or Relese)
+copy *.json from ../test to Debug (or Release)
 - cd to Debug (or Release)
 - run test.exe
 
