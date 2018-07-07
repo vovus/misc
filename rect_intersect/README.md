@@ -22,6 +22,7 @@ Run the application:<br/>
 - ./app.exe rects.json<br/>
 <br/>
 ==== Method Explained ====<br/>
+
 ```
 [2] ------ 350 *            +--------------22222222-----------------+<br/>
                             |                                       |<br/>
@@ -42,4 +43,6 @@ Run the application:<br/>
                [1]        [1,2]     [1,2,3]   [1,2,3,4] [1,2,3,4] [2,3,4]   [3,4]    [4]<br/>
            
 ```
+
+
 
