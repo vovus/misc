@@ -34,7 +34,7 @@ Between rectangle 2 and 3 and 4 at (160, 200), w=210, h=60.
 assumptions:
 - don't go above 1000 rectangles
 - overlapped rectangles are distinct
-- all x, y, w, h are > 0
+- all x, y, w, h are positive ( e.g. > 0 ) integers
 
 === Build ===
 
