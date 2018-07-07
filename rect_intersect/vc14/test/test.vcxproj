@@ -146,12 +146,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\test\catch.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\test\sample.json" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\src\io_helper.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\3rd</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\3rd</AdditionalIncludeDirectories>

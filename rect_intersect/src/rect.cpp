@@ -15,7 +15,6 @@ namespace __intersect
 	class TIntersector
 	{
 		std::map<size_t, std::set<size_t>> pointsX, pointsY;	// key = either X or Y start or end of the rect, set is rect's ids containing this point
-
 	public:
 		void plot_fill(std::vector<rect_t>& rects);
 		void intersect(std::map<std::set<size_t>, rect_t>& result);

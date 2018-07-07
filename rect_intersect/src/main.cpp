@@ -25,13 +25,19 @@ int main(int argc, char* argv[])
 	std::map<std::set<size_t>, rect_t> result;
 
 	TIOHelper io(fin, fout);
-	io.json_read(rects);
+
+	if (0 != io.json_read())
+		return 1;
+
+	io.make_rect(rects);
 
 	// calculate
 	__main(rects, result);
 
     // write results
-	io.file_write(rects, result);
+	//io.shift_result(result);
+	if (0 != io.file_write(rects, result))
+		return 1;
 
     return 0;
 }

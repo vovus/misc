@@ -79,6 +79,13 @@ from command line:
 - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\vsvars32.bat"
 - devenv rect_intersect.sln /build "Release|Win32"
 
+To run the test:
+- build test project
+copy sample.json from ../test to Debug (or Relese)
+- cd to Debug (or Release)
+- run test.exe
+
+
 ==== Method Explained ====
 
 [2] ------ 350 *            +--------------22222222-----------------+
