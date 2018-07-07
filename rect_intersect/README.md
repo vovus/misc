@@ -1,8 +1,35 @@
 ```
 === WTH ===
 
-Given set of rectangulars in json format description find out all intersections and write results 
-into text file
+Given set of rectangles in json format find out all intersections in between them and write results 
+into the text file, e.g.:
+
+- rects.json:
+
+{ 
+	"rects" : [ 
+		{"x" : 100, "y" : 100, "w" : 250, "h" : 80}, 
+		{"x" : 120, "y" : 200, "w" : 250, "h" : 150}, 
+		{"x" : 140, "y" : 160, "w" : 250, "h" : 100}, 
+		{"x" : 160, "y" : 140, "w" : 350, "h" : 190} 
+	] 
+}
+
+- result.txt:
+
+Input:
+1: Rectangle at (100, 100), w=250, h=80.
+2: Rectangle at (120, 200), w=250, h=150.
+3: Rectangle at (140, 160), w=250, h=100.
+4: Rectangle at (160, 140), w=350, h=190.
+Intersections:
+Between rectangle 1 and 3 at (140, 160), w=210, h=20.
+Between rectangle 1 and 4 at (160, 140), w=190, h=40.
+Between rectangle 2 and 3 at (140, 200), w=230, h=60.
+Between rectangle 2 and 4 at (160, 200), w=210, h=130.
+Between rectangle 3 and 4 at (160, 160), w=230, h=100.
+Between rectangle 1 and 3 and 4 at (160, 160), w=190, h=20.
+Between rectangle 2 and 3 and 4 at (160, 200), w=210, h=60.
 
 assumptions:
 - don't go above 1000 rectangulars
