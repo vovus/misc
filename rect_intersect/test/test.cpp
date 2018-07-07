@@ -64,8 +64,8 @@ TEST_CASE("Smoke", "Test1")
 
 #include "io_helper.h"
 
-static std::string fin("rects.json");
-static std::string fout("results.txt");
+static std::string fin("sample.json");
+static std::string fout("result.txt");
 
 TEST_CASE("Json / InOut", "Test2")
 {
