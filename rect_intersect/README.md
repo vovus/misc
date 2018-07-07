@@ -59,7 +59,7 @@ Run the test:
 
 Run the application:
 - cd build/install
-- ./app.exe rects.json
+- ./main.exe sample.json
 
 ==== Method Explained ====
 
