@@ -1,6 +1,6 @@
 ```
-
 === WTH ===
+
 Given set of rectangulars in json format description find out all intersections and write results 
 into text file
 
@@ -9,6 +9,7 @@ assumptions:
 - overlapping rectangulars are distinct
 
 === Build ===
+
 C++ 14 compiler is required (either Visual Studio 2015 / 2017, or cmake-3.1)
 
 Build with CMake or on Linux:
