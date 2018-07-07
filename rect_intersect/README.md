@@ -3,16 +3,20 @@ Given set of rectangulars in json format description find out all intersections 
 assumptions:<br/>
 - don't go above 1000 rectangulars<br/>
 - overlapping rectangulars are distinct<br/>
+<br/>
 === Build ===<br/>
 C++ 14 compiler is required (either Visual Studio 2015 / 2017, or cmake-3.1)<br/>
+<br/>
 Build with CMake or on Linux:<br/>
 - mkdir build<br/>
 - cd build<br/>
 - cmake ..<br/>
 - make all install<br/>
+<br/>
 Run the test:<br/>
 - cd build/install<br/>
 - ./test.exe<br/>
+<br/>
 Run the application:<br/>
 - cd build/install<br/>
 - ./app.exe rects.json<br/>
