@@ -284,8 +284,8 @@ TEST_CASE("Size Overflow", "Test6")
 
 	// 0x7FFFFFFF is last/max positive int number
 	// so X + 20 will be negative
-	REQUIRE((io.rects0[0].x0 + io.rects0[0].w) <= io.rects0[0].x0);
-	REQUIRE((io.rects0[1].x0 + io.rects0[1].w) <= io.rects0[1].x0);
+	REQUIRE((io.rects0[0].x0 + io.rects0[0].w) <= (size_t)io.rects0[0].x0);
+	REQUIRE((io.rects0[1].x0 + io.rects0[1].w) <= (size_t)io.rects0[1].x0);
 
 	// but when shifted it will be equvivalent to
 	/*
