@@ -61,8 +61,10 @@ Run the application:
  X:Y point rectangle 1, rectangle 3 and 4 are intersecting. so we can put into set of intersections 
  this triplet,  but also make note that there are 3 other intersections here - 1 with 3, 3 with 4 
  and 4 with 1, so in  general in array of intersected IDs of size N we should take all 1 < K < N permutations. 
- We also use set to collect intersections which will guaranty no duplicates in there - if combination 
- is already in set then we update coordinates of intersection region
+ We also use set to collect intersections which will guaranty no duplicates in there. Note that every 
+ intersection occuring for the 1st time (e.g. not in the set yet) will carry X:Y coordinates of new 
+ found intersected region. But if combination is already in set then we update W:H coordinates of 
+ intersected region.
            
 ```
 
