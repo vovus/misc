@@ -55,10 +55,10 @@ Run the application:
  - for each X-point go through all Y-points and for each X,Y pair do their rectangles IDs intersection
  (but ignore/skip points with only single ID, like X:100, Y:100),e.g.
  
- X:160 = [1,2,3,4], Y:180 = [1,3,4] gives us [1,3,4] as an intersection if IDs, which means in this X:Y pioint
+ X:160 = [1,2,3,4], Y:180 = [1,3,4] gives us [1,3,4] as an intersection if IDs, which means in this X:Y point
  rectangle 1, rectangle 3 and 4 are intersecting. so we can put into set of intersections this triplet, 
  but also make note that there are 3 other intersections here - 1 with 3, 3 with 4 and 4 with 1, so in 
- general in array of IDs of size N we should take all 1 < K < N permutations. We also use set to collect
+ general in array of intersected IDs of size N we should take all 1 < K < N permutations. We also use set to collect
  intersections which will guaranty no duplicates in there - if combination is already in set then we update 
  coordinates of intersection
            
