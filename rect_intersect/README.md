@@ -38,9 +38,16 @@ assumptions:
 
 === Build ===
 
-C++ 14 compiler is required (either Visual Studio 2015 / 2017, or cmake-3.1)
+C++ 14 complient compiler is required 
 
-Build with CMake or on Linux:
+Build with Visual Studio 2015 / 2017:
+- cd vc14
+- open Visual Studio and build
+from command line:
+- call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\vsvars32.bat"
+- devenv rect_intersect.sln /build "Release"
+
+Build with CMake 3.1 and up (tested on Ubuntu 18.04 with Visual Code):
 - mkdir build
 - cd build
 - cmake ..
