@@ -32,8 +32,9 @@ Between rectangle 1 and 3 and 4 at (160, 160), w=190, h=20.
 Between rectangle 2 and 3 and 4 at (160, 200), w=210, h=60.
 
 assumptions:
-- don't go above 1000 rectangulars
-- overlapping rectangulars are distinct
+- don't go above 1000 rectangles
+- overlapped rectangles are distinct
+- all x, y, w, h are > 0
 
 === Build ===
 
