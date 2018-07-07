@@ -36,30 +36,48 @@ assumptions:
 - overlapped rectangles are distinct
 - all x, y, w, h are positive ( e.g. > 0 ) integers
 
-=== Build ===
+=== Build (Windows / Linux) ===
 
 C++ 14 complient compiler is required 
 
-Build with Visual Studio 2015 / 2017:
+Build with CMake 3.1 and up 
+(tested on Ubuntu 18.04 / Visual Code and Windows 10 / Visual Studio 2015):
+- mkdir build
+- cd build
+- cmake ..
+On Ubuntu:
+- make all install
+On Windows:
+- open generated Project.sln in Visual Studio and build
+- or if from command line:
+	call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\vsvars32.bat"
+	devenv Project.sln /build "Release|Win32"
+
+Run the test:
+On Ubuntu:
+- cd build/install
+- ./test.exe
+On Windows:
+- copy test/sample.json to build/Debug (or Release)
+- cd build/Debug (or Release)
+- run test.exe
+
+Run the application:
+On Ubuntu:
+- cd build/install
+- ./main.exe sample.json
+On Windows:
+- copy test/sample.json to build/Debug (or Release)
+- cd build/Debug (or Release)
+- run main.exe sample.json
+
+=== Build (Windows only / Visual Studio 2015 / 2017) ===
+
 - cd vc14
 - open Visual Studio and build
 from command line:
 - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\vsvars32.bat"
-- devenv rect_intersect.sln /build "Release"
-
-Build with CMake 3.1 and up (tested on Ubuntu 18.04 with Visual Code):
-- mkdir build
-- cd build
-- cmake ..
-- make all install
-
-Run the test:
-- cd build/install
-- ./test.exe
-
-Run the application:
-- cd build/install
-- ./main.exe sample.json
+- devenv rect_intersect.sln /build "Release|Win32"
 
 ==== Method Explained ====
 
