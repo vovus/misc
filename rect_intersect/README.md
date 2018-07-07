@@ -1,38 +1,27 @@
-=== WTH ===
-
-Given set of rectangulars in json format description find out all intersections and write results into text file
-
-assumptions:
-- don't go above 1000 rectangulars
-- overlapping rectangulars are distinct
-
-=== Build ===
-
-C++ 14 compiler is required (either Visual Studio 2015 / 2017, or cmake-3.1)
-
-Build with CMake or on Linux:
-
-- mkdir build
-
-- cd build
-
-- cmake ..
-
-- make all install
-
-Run the test:
-
-- cd build/install
-
-- ./test.exe
-
-Run the application:
-
-- cd build/install
-
-- ./app.exe rects.json
-
-==== Method Explained ====
+=== WTH ===<br/>
+<br/>
+Given set of rectangulars in json format description find out all intersections and write results into text file<br/>
+<br/>
+assumptions:<br/>
+- don't go above 1000 rectangulars<br/>
+- overlapping rectangulars are distinct<br/>
+<br/>
+=== Build ===<br/>
+<br/>
+C++ 14 compiler is required (either Visual Studio 2015 / 2017, or cmake-3.1)<br/>
+Build with CMake or on Linux:<br/>
+- mkdir build<br/>
+- cd build<br/>
+- cmake ..<br/>
+- make all install<br/>
+Run the test:<br/>
+- cd build/install<br/>
+- ./test.exe<br/>
+Run the application:<br/>
+- cd build/install<br/>
+- ./app.exe rects.json<br/>
+<br/>
+==== Method Explained ====<br/>
 
 [2] ------ 350 *            +--------------22222222-----------------+
                             |                                       |
