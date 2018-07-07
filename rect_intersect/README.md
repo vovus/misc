@@ -34,7 +34,7 @@ Between rectangle 2 and 3 and 4 at (160, 200), w=210, h=60.
 assumptions:
 - don't go above 1000 rectangles
 - overlapped rectangles are distinct
-- all x, y, w, h are positive ( e.g. > 0 ) integers
+- w, h are positive ( e.g. > 0 ) integers, x, y - could be zero or negative
 
 === Build (Windows / Linux) ===
 
@@ -58,7 +58,7 @@ On Ubuntu:
 - cd build/install
 - ./test.exe
 On Windows:
-- copy test/sample.json to build/Debug (or Release)
+- copy test/*.json to build/Debug (or Release)
 - cd build/Debug (or Release)
 - run test.exe
 
@@ -81,7 +81,7 @@ from command line:
 
 To run the test:
 - build test project
-copy sample.json from ../test to Debug (or Relese)
+copy *.json from ../test to Debug (or Relese)
 - cd to Debug (or Release)
 - run test.exe
 

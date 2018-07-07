@@ -261,10 +261,79 @@ TEST_CASE("Json / InOut Shifted", "Test4")
 	REQUIRE(hash == hash0);
 }
 
-TEST_CASE("Size Overflow", "Test5")
+TEST_CASE("Size Overflow", "Test6")
 {
-}
+	// check conditions when original rectangle does overflow, shifted - doesn't
 
-TEST_CASE("1000 cut-off", "Test6")
-{
+	// let's consider:
+	/*
+		{ 0xFFFFFFFF - 9, 0, 30, 10 },
+		{ 0xFFFFFFFF - 9, 0, 20, 10 }
+	*/
+
+	TIOHelper io("dummy", "dummy");
+	rect0_t r1, r2;
+	r1.x0 = r2.x0 = 0xFFFFFFFF - 9;	// -1 -9 = -10
+	r1.y0 = r2.y0 = 0;
+	r1.w = 30;
+	r2.w = 20;
+	r1.h = r2.h = 10;
+
+	io.rects0.push_back(r1);
+	io.rects0.push_back(r2);
+
+	// 0x7FFFFFFF is last/max positive int number
+	// so X + 20 will be negative
+	REQUIRE((io.rects0[0].x0 + io.rects0[0].w) <= io.rects0[0].x0);
+	REQUIRE((io.rects0[1].x0 + io.rects0[1].w) <= io.rects0[1].x0);
+
+	// but when shifted it will be equvivalent to
+	/*
+	{ 0, 0, 20, 10 },
+	{ 0, 0, 10, 10 }
+	*/
+
+	std::vector<rect_t> rects_shifted;
+	io.make_rect(rects_shifted);
+
+	REQUIRE((rects_shifted[0].x + rects_shifted[0].w) > rects_shifted[0].x);
+	REQUIRE((rects_shifted[1].x + rects_shifted[1].w) > rects_shifted[1].x);
+
+	// so we can calculate and result to be:
+	// 0x7FFFFFFF == 2147483647
+	std::string result_txt = R"(Input:
+1: Rectangle at (-10, 0), w=30, h=10.
+2: Rectangle at (-10, 0), w=20, h=10.
+Intersections:
+Between rectangle 1 and 2 at (-10, -10), w=20, h=10.
+)";
+
+	// calculate
+	std::map<std::set<size_t>, rect_t> result;
+	__main(rects_shifted, result);
+
+	// write results
+	REQUIRE(0 == io.file_write(rects_shifted, result));
 }
+/*
+TEST_CASE("1000 cut-off", "Test7")
+{
+	TIOHelper io("dummy", "dummy");
+
+	// try to put 1001 rectangles
+	for (size_t i = 0; i < 1000000; ++i)
+	{
+		rect0_t r1;
+		r1.x0 = 10;
+		r1.y0 = 0;
+		r1.w = 10;
+		r1.h = 10;
+
+		io.rects0.push_back(r1);
+	}
+	std::vector<rect_t> rects;
+	io.make_rect(rects);
+
+	REQUIRE(rects.size() == 1000);
+}
+*/

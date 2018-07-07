@@ -19,13 +19,14 @@ namespace __intersect
 
 	class TIOHelper
 	{
-		std::vector<rect0_t> rects0;
 		std::string file_in, file_out;
 
 	public:
 		TIOHelper(std::string fi, std::string fo)
 			: file_in(fi), file_out(fo)
 		{}
+		std::vector<rect0_t> rects0;
+
 		int json_read();
 		int file_write(const std::vector<rect_t>& rects, const std::map<std::set<size_t>, rect_t>& result);
 
