@@ -8,7 +8,7 @@
 
 using namespace __intersect;
 
-static std::string fin("rects.json");
+///static std::string fin("sample.json");
 static std::string fout("result.txt");
 
 int main(int argc, char* argv[])

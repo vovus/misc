@@ -120,9 +120,9 @@ TEST_CASE("Json / InOut", "Test2")
 	std::istringstream ss0(result0_txt);
 
 	std::string s, s0;
-    while (std::getline(ss, s) && std::getline(ss0, s0))
+	while (std::getline(ss, s) && std::getline(ss0, s0))
 	{
-    	hash += hash_fn(s);
+		hash += hash_fn(s);
 		hash0 += hash_fn(s0);
 	}
 	f.close();
