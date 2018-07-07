@@ -8,10 +8,10 @@ set (CMAKE_INSTALL_PREFIX install)
 
 include_directories( ${3rd_DIR} src)
 
-set (SOURCES src/main.cpp src/io_helper.cpp)
+set (SOURCES src/rect.cpp src/io_helper.cpp)
 
 add_executable(test.exe ${SOURCES} test/test.cpp test/rects.json)
-add_executable(main.exe ${SOURCES} src/app.cpp)
+add_executable(main.exe ${SOURCES} src/main.cpp)
 
 install(TARGETS test.exe main.exe DESTINATION . COMPONENT binaries)
 install(FILES test/rects.json DESTINATION . COMPONENT config)

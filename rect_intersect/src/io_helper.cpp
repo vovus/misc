@@ -13,7 +13,7 @@
 //#include <string.h>
 
 #include "io_helper.h"
-#include "main.h"
+#include "rect.h"
 
 namespace pt = boost::property_tree;
 using namespace __intersect;

@@ -2,7 +2,7 @@
 #include "catch.hpp"
 
 #include <unordered_map>
-#include "main.h"
+#include "rect.h"
 
 using namespace __intersect;
 

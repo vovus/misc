@@ -5,7 +5,7 @@
 #include <map>
 #include <set>
 
-#include "main.h"
+#include "rect.h"
 
 namespace __intersect
 {
