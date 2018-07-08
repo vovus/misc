@@ -95,7 +95,7 @@ or if from command line:
 Run the test:
 
 - build test project
-copy *.json from ../test to Debug (or Release)
+- copy *.json from ../test to Debug (or Release)
 - cd to Debug (or Release)
 - run test.exe
 
