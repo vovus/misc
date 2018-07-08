@@ -1,5 +1,5 @@
 ```
-=== WTH
+=== About
 
 Given set of rectangles in json format find out all intersections in between them and write results 
 into the text file, e.g.:
