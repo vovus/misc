@@ -20,17 +20,15 @@ namespace __intersect
 	class TIOHelper
 	{
 		std::string file_in, file_out;
-
 	public:
 		TIOHelper(std::string fi, std::string fo)
 			: file_in(fi), file_out(fo)
 		{}
-		std::vector<rect0_t> rects0;
-
 		int json_read();
 		int file_write(const std::vector<rect_t>& rects, const std::map<std::set<size_t>, rect_t>& result);
 
 		void make_rect(std::vector<rect_t>& rects);
-		//void shift_result(std::map<std::set<size_t>, rect_t>& result);
+		
+		std::vector<rect0_t> rects0;
 	};
 }

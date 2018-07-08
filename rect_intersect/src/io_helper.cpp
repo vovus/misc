@@ -216,15 +216,5 @@ void TIOHelper::make_rect(std::vector<rect_t>& rects)
 			rects.push_back(static_cast<rect_t&>(r));
 	});
 }
-/*
-void TIOHelper::shift_result(std::map<std::set<size_t>, rect_t>& result)
-{
-	for (auto i = result.begin(); i != result.end(); ++i)
-	{
-		rect_t& rect = i->second;
-		rect.x -= rect0_t::dx;
-		rect.y -= rect0_t::dy;
-	}
-}
-*/
+
 
