@@ -1,5 +1,5 @@
 ```
-=== WTH ===
+=== WTH
 
 Given set of rectangles in json format find out all intersections in between them and write results 
 into the text file, e.g.:
@@ -36,52 +36,66 @@ assumptions:
 - overlapped rectangles are distinct
 - w, h are positive ( e.g. > 0 ) integers, x, y - could be zero or negative
 
-=== Build (Windows / Linux) ===
+=== Build with cmake 
+(Windows / Linux - tested on Ubuntu 18.04 / Visual Code and Windows 10 / Visual Studio 2015)
 
-C++ 14 complient compiler is required 
+requirements:
+- C++ 14 complient compiler 
+- CMake 3.1 and up is required (tested with 3.10.2)
 
-Build with CMake 3.1 and up 
-(tested on Ubuntu 18.04 / Visual Code and Windows 10 / Visual Studio 2015):
+1. Build project:
+
 - mkdir build
 - cd build
 - cmake ..
+
 On Ubuntu:
 - make all install
+
 On Windows:
-- open generated Project.sln in Visual Studio and build
+- open generated Project.sln in Visual Studio and build it
 - or if from command line:
 	call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\vsvars32.bat"
 	devenv Project.sln /build "Release|Win32"
 
-Run the test:
+2. Run the test:
+
 On Ubuntu:
 - cd build/install
-- ./test.exe
+- ./test
+
 On Windows:
 - copy test/*.json to build/Debug (or Release)
 - cd build/Debug (or Release)
 - run test.exe
 
-Run the application:
+3. Run the application:
+
 On Ubuntu:
 - cd build/install
-- ./main.exe sample.json
+- ./main sample.json
+
 On Windows:
 - copy test/sample.json to build/Debug (or Release)
 - cd build/Debug (or Release)
 - run main.exe sample.json
 
-=== Build (Windows only / Visual Studio 2015 / 2017) ===
+=== Build with Visual Studio (Windows only)
+(tested on Windows 10 with Visual Studio 2015)
+
+1. Build:
 
 - cd vc14
-- open Visual Studio and build
-from command line:
+- open Visual Studio, open main.sln solution and build it
+
+or if from command line:
 - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\vsvars32.bat"
 - devenv main.sln /build "Release|Win32"
 
-To run the test:
+Run the test:
+
 - build test project
-copy *.json from ../test to Debug (or Release)
+- copy *.json from ../test to Debug (or Release)
 - cd to Debug (or Release)
 - run test.exe
 
