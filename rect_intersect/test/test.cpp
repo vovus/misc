@@ -81,18 +81,18 @@ Between rectangle 2 and 3 and 4 at (160, 200), w=210, h=60.
 )";
 
 static std::string result0_shifted_txt = R"(Input:
-1: Rectangle at (-100, -100), w=250, h=80.
-2: Rectangle at (-80, 0), w=250, h=150.
-3: Rectangle at (-60, -40), w=250, h=100.
-4: Rectangle at (-40, -60), w=350, h=190.
+1: Rectangle at (-50, -50), w=250, h=80.
+2: Rectangle at (-30, 50), w=250, h=150.
+3: Rectangle at (-10, 10), w=250, h=100.
+4: Rectangle at (10, -10), w=350, h=190.
 Intersections:
-Between rectangle 1 and 3 at (-60, -40), w=210, h=20.
-Between rectangle 1 and 4 at (-40, -60), w=190, h=40.
-Between rectangle 2 and 3 at (-60, 0), w=230, h=60.
-Between rectangle 2 and 4 at (-40, 0), w=210, h=130.
-Between rectangle 3 and 4 at (-40, -40), w=230, h=100.
-Between rectangle 1 and 3 and 4 at (-40, -40), w=190, h=20.
-Between rectangle 2 and 3 and 4 at (-40, 0), w=210, h=60.
+Between rectangle 1 and 3 at (-10, 10), w=210, h=20.
+Between rectangle 1 and 4 at (10, -10), w=190, h=40.
+Between rectangle 2 and 3 at (-10, 50), w=230, h=60.
+Between rectangle 2 and 4 at (10, 50), w=210, h=130.
+Between rectangle 3 and 4 at (10, 10), w=230, h=100.
+Between rectangle 1 and 3 and 4 at (10, 10), w=190, h=20.
+Between rectangle 2 and 3 and 4 at (10, 50), w=210, h=60.
 )";
 
 TEST_CASE("Smoke", "Test1")
