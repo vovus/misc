@@ -7,37 +7,6 @@
 
 using namespace __intersect;
 
-
-static std::string result0_txt = R"(Input:
-1: Rectangle at (100, 100), w=250, h=80.
-2: Rectangle at (120, 200), w=250, h=150.
-3: Rectangle at (140, 160), w=250, h=100.
-4: Rectangle at (160, 140), w=350, h=190.
-Intersections:
-Between rectangle 1 and 3 at (140, 160), w=210, h=20.
-Between rectangle 1 and 4 at (160, 140), w=190, h=40.
-Between rectangle 2 and 3 at (140, 200), w=230, h=60.
-Between rectangle 2 and 4 at (160, 200), w=210, h=130.
-Between rectangle 3 and 4 at (160, 160), w=230, h=100.
-Between rectangle 1 and 3 and 4 at (160, 160), w=190, h=20.
-Between rectangle 2 and 3 and 4 at (160, 200), w=210, h=60.
-)";
-
-static std::string result0_shifted_txt = R"(Input:
-1: Rectangle at (-50, -50), w=250, h=80.
-2: Rectangle at (-30, 50), w=250, h=150.
-3: Rectangle at (-10, 10), w=250, h=100.
-4: Rectangle at (10, -10), w=350, h=190.
-Intersections:
-Between rectangle 1 and 3 at (-10, 10), w=210, h=20.
-Between rectangle 1 and 4 at (10, -10), w=190, h=40.
-Between rectangle 2 and 3 at (-10, 50), w=230, h=60.
-Between rectangle 2 and 4 at (10, 50), w=210, h=130.
-Between rectangle 3 and 4 at (10, 10), w=230, h=100.
-Between rectangle 1 and 3 and 4 at (10, 10), w=190, h=20.
-Between rectangle 2 and 3 and 4 at (10, 50), w=210, h=60.
-)";
-
 static int file_to_string(const std::string& fout, std::string& file_data)
 {
 	std::ifstream f(fout);
@@ -171,6 +140,21 @@ TEST_CASE("Overlapping", "Test2")
 
 TEST_CASE("Json / InOut", "Test3")
 {
+	std::string result_expected = R"(Input:
+1: Rectangle at (100, 100), w=250, h=80.
+2: Rectangle at (120, 200), w=250, h=150.
+3: Rectangle at (140, 160), w=250, h=100.
+4: Rectangle at (160, 140), w=350, h=190.
+Intersections:
+Between rectangle 1 and 3 at (140, 160), w=210, h=20.
+Between rectangle 1 and 4 at (160, 140), w=190, h=40.
+Between rectangle 2 and 3 at (140, 200), w=230, h=60.
+Between rectangle 2 and 4 at (160, 200), w=210, h=130.
+Between rectangle 3 and 4 at (160, 160), w=230, h=100.
+Between rectangle 1 and 3 and 4 at (160, 160), w=190, h=20.
+Between rectangle 2 and 3 and 4 at (160, 200), w=210, h=60.
+)";
+
 	std::map<std::set<size_t>, rect_t> result0 =
 	{
 		{ { 1, 3 },{ 140, 160, 210, 20 } },
@@ -189,8 +173,8 @@ TEST_CASE("Json / InOut", "Test3")
 	std::map<std::set<size_t>, rect_t> result;
 
 	TIOHelper io(fin, fout);
-	REQUIRE(0 == io.json_read());
-	io.make_rect(rects);
+	REQUIRE(0 == io.json_read(rects));
+	//io.make_rect(rects);
 
 	// calculate
 	REQUIRE(0 == __main(rects, result));
@@ -226,7 +210,7 @@ TEST_CASE("Json / InOut", "Test3")
 	// do hash on each string, then add them all)
 
 	size_t hash = hash_multiline_string(file_data);
-	size_t hash0 = hash_multiline_string(result0_txt);
+	size_t hash0 = hash_multiline_string(result_expected);
 
 	REQUIRE(hash != 0);
 	REQUIRE(hash0 != 0);
@@ -236,6 +220,21 @@ TEST_CASE("Json / InOut", "Test3")
 
 TEST_CASE("Json / InOut Shifted", "Test4")
 {
+	std::string result_expected = R"(Input:
+1: Rectangle at (-50, -50), w=250, h=80.
+2: Rectangle at (-30, 50), w=250, h=150.
+3: Rectangle at (-10, 10), w=250, h=100.
+4: Rectangle at (10, -10), w=350, h=190.
+Intersections:
+Between rectangle 1 and 3 at (-10, 10), w=210, h=20.
+Between rectangle 1 and 4 at (10, -10), w=190, h=40.
+Between rectangle 2 and 3 at (-10, 50), w=230, h=60.
+Between rectangle 2 and 4 at (10, 50), w=210, h=130.
+Between rectangle 3 and 4 at (10, 10), w=230, h=100.
+Between rectangle 1 and 3 and 4 at (10, 10), w=190, h=20.
+Between rectangle 2 and 3 and 4 at (10, 50), w=210, h=60.
+)";
+
 	std::string fin("sample4.json");
 	std::string fout("result_test4.txt");
 
@@ -243,8 +242,26 @@ TEST_CASE("Json / InOut Shifted", "Test4")
 	std::map<std::set<size_t>, rect_t> result;
 
 	TIOHelper io(fin, fout);
-	REQUIRE(0 == io.json_read());
-	io.make_rect(rects);
+	REQUIRE(0 == io.json_read(rects));
+	//io.make_rect(rects);
+
+	std::set<key> test;
+	test.insert(key(10, 0));
+	test.insert(key(-50, 0));
+
+	REQUIRE(test.begin()->first == -50);
+
+	bool is32 = (sizeof(void*) == 4);
+	std::set<key> test2;
+	test2.insert(key(10, is32 ? 0xFFFFFFFF - 5 : 0xFFFFFFFFFFFFFFFF - 5));
+	test2.insert(key(8, is32 ? 0xFFFFFFFF - 2 : 0xFFFFFFFFFFFFFFFF - 2));
+
+	REQUIRE(test2.begin()->first == 10);
+
+	std::set<key> test3;
+	test3.insert(key(10, 0));
+	test3.insert(key(8, is32 ? 0xFFFFFFFF - 2 : 0xFFFFFFFFFFFFFFFF - 2));
+	REQUIRE(test3.begin()->first == 10);
 
 	// calculate
 	REQUIRE(0 == __main(rects, result));
@@ -263,7 +280,7 @@ TEST_CASE("Json / InOut Shifted", "Test4")
 	// do hash on each string, then add them all)
 	
 	size_t hash = hash_multiline_string(file_data);
-	size_t hash0 = hash_multiline_string(result0_shifted_txt);
+	size_t hash0 = hash_multiline_string(result_expected);
 
 	REQUIRE(hash != 0);
 	REQUIRE(hash0 != 0);
@@ -272,59 +289,45 @@ TEST_CASE("Json / InOut Shifted", "Test4")
 
 TEST_CASE("Size Overflow", "Test6")
 {
-	// check conditions when original rectangle does overflow, shifted - doesn't
-
-	// let's consider:
-	/*
-		{ 0xFFFFFFFF - 9, 0, 30, 10 },
-		{ 0xFFFFFFFF - 9, 0, 20, 10 }
-	*/
-	std::string result_expected = R"(Input:
-1: Rectangle at (-10, 0), w=30, h=10.
-2: Rectangle at (-10, 0), w=20, h=10.
+	std::string result_expected32 = R"(Input:
+1: Rectangle at (10, 0), w=4294967290, h=10.
+2: Rectangle at (8, 0), w=4294967293, h=10.
+3: Rectangle at (10, 0), w=10, h=10.
 Intersections:
-Between rectangle 1 and 2 at (-10, 0), w=20, h=10.
+Between rectangle 1 and 2 at (10, 0), w=4294967290, h=10.
+Between rectangle 1 and 2 and 3 at (10, 0), w=10, h=10.
+Between rectangle 1 and 3 at (10, 0), w=10, h=10.
+Between rectangle 2 and 3 at (10, 0), w=10, h=10.
 )";
 
-	std::string fin("sample6.json");
+	std::string result_expected64 = R"(Input:
+1: Rectangle at (10, 0), w=18446744073709551610, h=10.
+2: Rectangle at (8, 0), w=18446744073709551613, h=10.
+3: Rectangle at (10, 0), w=10, h=10.
+Intersections:
+Between rectangle 1 and 2 at (10, 0), w=18446744073709551610, h=10.
+Between rectangle 1 and 2 and 3 at (10, 0), w=10, h=10.
+Between rectangle 1 and 3 at (10, 0), w=10, h=10.
+Between rectangle 2 and 3 at (10, 0), w=10, h=10.
+)";
+
+	std::string fin32("sample6_32.json");
+	std::string fin64("sample6_64.json");
 	std::string fout("result_test6.txt");
 
-	TIOHelper io(fin, fout);
-	REQUIRE(0 == io.json_read());
-	/*
-	rect0_t r1, r2;
-	r1.x0 = r2.x0 = 0xFFFFFFFF - 9;	// -1 -9 = -10
-	r1.y0 = r2.y0 = 0;
-	r1.w = 30;
-	r2.w = 20;
-	r1.h = r2.h = 10;
+	TIOHelper io(sizeof(void*) == 4 ? fin32 : fin64, fout);
 
-	io.rects0.push_back(r1);
-	io.rects0.push_back(r2);
-	*/
-	// 0x7FFFFFFF is last/max positive int number
-	// so X + 20 will be negative
-	REQUIRE((io.rects0[0].x0 + io.rects0[0].w) <= (size_t)io.rects0[0].x0);
-	REQUIRE((io.rects0[1].x0 + io.rects0[1].w) <= (size_t)io.rects0[1].x0);
+	std::string& result_expected = (sizeof(void*) == 4 ? result_expected32 : result_expected64);
 
-	// but when shifted it will be equvivalent to
-	/*
-	{ 0, 0, 20, 10 },
-	{ 0, 0, 10, 10 }
-	*/
-
-	std::vector<rect_t> rects_shifted;
-	io.make_rect(rects_shifted);
-
-	REQUIRE((rects_shifted[0].x + rects_shifted[0].w) > rects_shifted[0].x);
-	REQUIRE((rects_shifted[1].x + rects_shifted[1].w) > rects_shifted[1].x);
+	std::vector<rect_t> rects;
+	REQUIRE(0 == io.json_read(rects));
 
 	// calculate
 	std::map<std::set<size_t>, rect_t> result;
-	REQUIRE(0 == __main(rects_shifted, result));
+	REQUIRE(0 == __main(rects, result));
 
 	// write results
-	REQUIRE(0 == io.file_write(rects_shifted, result));
+	REQUIRE(0 == io.file_write(rects, result));
 
 	// read back and check
 	std::string file_data;
@@ -352,10 +355,10 @@ Between rectangle 1 and 2 at (10, 10), w=0, h=10.
 
 	TIOHelper io(fin, fout);
 
-	REQUIRE(0 == io.json_read());
-	
 	std::vector<rect_t> rects;
-	io.make_rect(rects);
+	REQUIRE(0 == io.json_read(rects));
+	
+	//io.make_rect(rects);
 
 	// calculate
 	std::map<std::set<size_t>, rect_t> result;
@@ -394,10 +397,10 @@ Between rectangle 1 and 2 at (10, 10), w=0, h=0.
 
 	TIOHelper io(fin, fout);
 
-	REQUIRE(0 == io.json_read());
-	
 	std::vector<rect_t> rects;
-	io.make_rect(rects);
+	REQUIRE(0 == io.json_read(rects));
+	
+	//io.make_rect(rects);
 
 	// calculate
 	std::map<std::set<size_t>, rect_t> result;

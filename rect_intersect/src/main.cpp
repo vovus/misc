@@ -28,13 +28,13 @@ int main(int argc, char* argv[])
 
 	TIOHelper io(fin, fout);
 
-	if (0 != io.json_read())
+	if (0 != io.json_read(rects))
 	{
 		 std::cout << "ERROR: failed to read input file: " << fin << std::endl;
 		return 1;
 	}
 
-	io.make_rect(rects);
+	//io.make_rect(rects);
 
 	// calculate
 	if (0 != __main(rects, result))

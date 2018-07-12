@@ -9,7 +9,7 @@ set (CMAKE_INSTALL_PREFIX install)
 include_directories( ${3rd_DIR} src)
 
 set (SOURCES src/rect.cpp src/io_helper.cpp)
-set (JSON_DATA test/sample3.json test/sample4.json test/sample6.json test/sample7.json test/sample8.json)
+set (JSON_DATA test/sample3.json test/sample4.json test/sample6_32.json test/sample6_64.json test/sample7.json test/sample8.json)
 
 add_executable(tests ${SOURCES} test/test.cpp ${JSON_DATA})
 add_executable(main ${SOURCES} src/main.cpp)

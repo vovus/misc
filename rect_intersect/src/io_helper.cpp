@@ -18,8 +18,8 @@
 namespace pt = boost::property_tree;
 using namespace __intersect;
 
-size_t rect0_t::dx = 0;
-size_t rect0_t::dy = 0;
+//size_t rect0_t::dx = 0;
+//size_t rect0_t::dy = 0;
 
 /*
 IN:
@@ -41,7 +41,7 @@ OUT:
 		Between ..
 */
 
-int TIOHelper::json_read()
+int TIOHelper::json_read(std::vector<rect_t>& rects)
 {
 	int retcode = -1;
 	try
@@ -69,13 +69,13 @@ int TIOHelper::json_read()
 			pt::ptree w_val = rect_node.get_child(std::string("w"));
 			pt::ptree h_val = rect_node.get_child(std::string("h"));
 
-			rect0_t r;
+			rect_t r;
 			try
 			{
-				r.x0 = std::stoi(x_val.data());
-				r.y0 = std::stoi(y_val.data());
-				r.w = std::stoi(w_val.data());
-				r.h = std::stoi(h_val.data());
+				r.x = std::stoi(x_val.data());
+				r.y = std::stoi(y_val.data());
+				r.w = std::stoul(w_val.data());
+				r.h = std::stoul(h_val.data());
 			}
 			//catch (std::invalid_argument& err)
 			//catch (std::out_of_range& err)
@@ -91,22 +91,30 @@ int TIOHelper::json_read()
 			{
 				std::cout << "WARNING: rectangle "
 					<< i << ", x="
-					<< r.x0 << ", y="
-					<< r.y0 << ", w="
+					<< r.x << ", y="
+					<< r.y << ", w="
 					<< r.w << ", h="
 					<< r.h << " is excluded from processing due to w and/or h beeing 0 or negative."
 					<< std::endl;
 				continue;
 			}
-
-			// NOTE: we dont' check for rect boundaries overflow here
-			// as beeing shifted it might fith the new boundaries
-			// do overflow check after the shift
-
-			rects0.push_back(r);
+			/*
+			// boundaries overflow of shifted rectangle check
+			if ((r.x + r.w) <= r.x || (r.y + r.h) <= r.y)
+			{
+				std::cout << "WARNING: rectangle x="
+				<< r.x << ", y="
+				<< r.y << ", w="
+				<< r.w << ", h="
+				<< r.h << " is excluded from processing due to its out of boundaries conditions."
+				<< std::endl;
+			}
+			else
+			*/
+				rects.push_back(r);
 		}
 	
-		if (rects0.size() != 0)
+		if (rects.size() != 0)
 			retcode = 0;
 		else
 			std::cout << "ERROR: no valid record found in JSON file provided." << std::endl;
@@ -138,8 +146,8 @@ int TIOHelper::file_write(
 		{
 			rect_t rect = r;
 			f << num++ << ": Rectangle at (" 
-				<< int(rect.x - rect0_t::dx) << ", " 
-				<< int(rect.y - rect0_t::dx) << "), w=" 
+				<< rect.x << ", " 
+				<< rect.y << "), w=" 
 				<< rect.w << ", h=" 
 				<< rect.h << "." 
 				<< std::endl;
@@ -163,8 +171,8 @@ int TIOHelper::file_write(
 			} );
 
 			f << " at (" 
-				<< int(rect.x - rect0_t::dx) << ", " 
-				<< int(rect.y - rect0_t::dx) << "), w=" 
+				<< rect.x << ", " 
+				<< rect.y << "), w=" 
 				<< rect.w << ", h=" 
 				<< rect.h << "." 
 				<< std::endl;
@@ -181,7 +189,7 @@ int TIOHelper::file_write(
 	}
 	return retcode;
 }
-
+/*
 // used to shift X,Y coordinates into positive space if negatives are provided
 // before generating the result file it shits them back
 
@@ -216,5 +224,5 @@ void TIOHelper::make_rect(std::vector<rect_t>& rects)
 			rects.push_back(static_cast<rect_t&>(r));
 	});
 }
-
+*/
 

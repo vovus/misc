@@ -14,7 +14,7 @@ namespace __intersect
 {
 	class TIntersector
 	{
-		std::map<size_t, std::set<size_t>> pointsX, pointsY;	// key = either X or Y start or end of the rect, set is rect's ids containing this point
+		std::map<key, std::set<size_t>> pointsX, pointsY;	// key = either X or Y start or end of the rect, set is rect's ids containing this point
 	public:
 		void plot_fill(std::vector<rect_t>& rects);
 		void intersect(std::map<std::set<size_t>, rect_t>& result);
@@ -36,11 +36,11 @@ void TIntersector::plot_fill(std::vector<rect_t>& rects)
 	// 1st - plot all points
 	for (size_t i = 0; i < rects.size(); ++i)
 	{
-		pointsX[rects[i].x];
-		pointsX[rects[i].x + rects[i].w];
+		pointsX[key(rects[i].x, 0)];
+		pointsX[key(rects[i].x, rects[i].w)];
 
-		pointsY[rects[i].y];
-		pointsY[rects[i].y + rects[i].h];
+		pointsY[key(rects[i].y, 0)];
+		pointsY[key(rects[i].y, rects[i].h)];
 	}
 
 	// 2nd - fill points with ids of rect is belong
@@ -48,14 +48,14 @@ void TIntersector::plot_fill(std::vector<rect_t>& rects)
 	{
 		auto id = i + 1;
 
-		pointsX[rects[i].x + rects[i].w].insert(id);	// do end point explicitly
-		std::for_each(pointsX.find(rects[i].x), pointsX.find(rects[i].x + rects[i].w), [&](auto& pi)
+		pointsX[key(rects[i].x, rects[i].w)].insert(id);	// do end point explicitly
+		std::for_each(pointsX.find(key(rects[i].x, 0)), pointsX.find(key(rects[i].x, rects[i].w)), [&](auto& pi)
 		{
 			(pi.second).insert(id);
 		});
 
-		pointsY[rects[i].y + rects[i].h].insert(id);	// do end point explicitly
-		std::for_each(pointsY.find(rects[i].y), pointsY.find(rects[i].y + rects[i].h), [&](auto& pi)
+		pointsY[key(rects[i].y, rects[i].h)].insert(id);	// do end point explicitly
+		std::for_each(pointsY.find(key(rects[i].y, 0)), pointsY.find(key(rects[i].y, rects[i].h)), [&](auto& pi)
 		{
 			(pi.second).insert(id);
 		});
@@ -70,7 +70,8 @@ void TIntersector::intersect(std::map<std::set<size_t>, rect_t>& result)
 		if (idx.size() <= 1)
 			continue;
 
-		size_t x = ix->first;
+		int x = ix->first.first;
+		size_t w = ix->first.second;
 
 		for (auto iy = pointsY.begin(); iy != pointsY.end(); ++iy)
 		{
@@ -78,7 +79,8 @@ void TIntersector::intersect(std::map<std::set<size_t>, rect_t>& result)
 			if (idy.size() <= 1)
 				continue;
 
-			size_t y = iy->first;
+			int y = iy->first.first;
+			size_t h = iy->first.second;
 
 			// intersect idx and idy
 			std::set<size_t> ids;
@@ -119,13 +121,13 @@ void TIntersector::intersect(std::map<std::set<size_t>, rect_t>& result)
 
 					if (isNew)
 					{
-						rect.x = x;
-						rect.y = y;
+						rect.x = x + w;
+						rect.y = y + h;
 					}
 					else
 					{
-						rect.h = y - rect.y;
-						rect.w = x - rect.x;
+						rect.h = y - rect.y + h;
+						rect.w = x - rect.x + w;
 					}
 				}
 				// generate next ON/OFF combination of index positions from ids so those with ON we take into subIds
